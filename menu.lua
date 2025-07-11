@@ -46,7 +46,35 @@ CloseButton.MouseButton1Click:Connect(function()
 end)
 
 
+local targetColor = Color3.fromRGB(255, 224, 189) -- Světle růžová / pleťová
 
+local function setBodyColors(character)
+    for _, partName in pairs({
+        "Head",
+        "Torso", "UpperTorso", "LowerTorso",
+        "Left Arm", "Right Arm",
+        "LeftUpperArm", "RightUpperArm",
+        "LeftLowerArm", "RightLowerArm",
+        "Left Leg", "Right Leg",
+        "LeftUpperLeg", "RightUpperLeg",
+        "LeftLowerLeg", "RightLowerLeg",
+    }) do
+        local part = character:FindFirstChild(partName)
+        if part and part:IsA("BasePart") then
+            part.Color = targetColor
+        end
+    end
+end
+
+local function onCharacterAdded(character)
+    task.wait(0.3)
+    setBodyColors(character)
+end
+
+game.Players.LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
+if game.Players.LocalPlayer.Character then
+    onCharacterAdded(game.Players.LocalPlayer.Character)
+end
 
 
 local LoadButton = Instance.new("TextButton")
@@ -5823,5 +5851,4 @@ end
 
 
 end)
-
 
